@@ -98,7 +98,8 @@ module Paperclip
       swallow_stderr: true,
       use_exif_orientation: true,
       whiny: true,
-      is_windows: Gem.win_platform?
+      is_windows: Gem.win_platform?,
+      add_validation_errors_to: :both
     }
   end
 
