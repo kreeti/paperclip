@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require "paperclip/attachment_registry"
 
 module Paperclip
