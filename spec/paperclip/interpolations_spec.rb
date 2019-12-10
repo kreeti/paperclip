@@ -106,7 +106,7 @@ describe Paperclip::Interpolations do
 
   it "is able to handle numeric style names" do
     attachment = spy(
-      styles: { "4": { format: :expected_extension } }
+      styles: {:"4" => {format: :expected_extension}}
     )
     assert_equal :expected_extension, Paperclip::Interpolations.extension(attachment, 4)
   end

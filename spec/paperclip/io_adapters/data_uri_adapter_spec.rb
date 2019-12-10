@@ -8,7 +8,9 @@ describe Paperclip::DataUriAdapter do
   after do
     Paperclip.io_adapters.unregister(described_class)
 
-    @subject&.close
+    if @subject
+      @subject.close
+    end
   end
 
   it "allows a missing mime-type" do

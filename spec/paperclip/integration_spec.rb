@@ -538,7 +538,7 @@ describe "Paperclip" do
       after do
         @file.close
         @bad_file.close
-        @files_on_s3&.values&.each(&:close)
+        @files_on_s3.values.each(&:close) if @files_on_s3
       end
 
       context "assigning itself to a new model" do
@@ -600,8 +600,8 @@ describe "Paperclip" do
             second_file = open(@dummy.avatar.url(style))
             assert_equal first_file.read, second_file.read
           ensure
-            first_file&.close
-            second_file&.close
+            first_file.close if first_file
+            second_file.close if second_file
           end
         end
 
