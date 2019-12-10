@@ -10,7 +10,7 @@ describe Paperclip::FileAdapter do
 
       after do
         @file.close
-        @subject&.close
+        @subject.close if @subject
       end
 
       context "doing normal things" do
