@@ -109,9 +109,15 @@ module Paperclip
           nil
         else
           assign_attributes
-          post_process_file
-          reset_file_if_original_reprocessed
+          dirty!
         end
+      end
+    end
+
+    def process_files
+      if dirty?
+        post_process_file
+        reset_file_if_original_reprocessed
       end
     end
 
@@ -343,6 +349,7 @@ module Paperclip
 
       begin
         assign(self)
+        process_files
         save
         instance.save
       rescue Errno::EACCES => e
@@ -449,8 +456,6 @@ module Paperclip
     end
 
     def post_process_file
-      dirty!
-
       post_process(*only_process) if post_processing
     end
 

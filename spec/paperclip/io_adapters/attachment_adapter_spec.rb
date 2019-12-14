@@ -12,6 +12,7 @@ describe Paperclip::AttachmentAdapter do
       @file.binmode
 
       @attachment.assign(@file)
+      @attachment.process_files
       @attachment.save
       @subject = Paperclip.io_adapters.for(@attachment,
                                            hash_digest: Digest::MD5)
@@ -64,6 +65,7 @@ describe Paperclip::AttachmentAdapter do
       @file.binmode
 
       @attachment.assign(@file)
+      @attachment.process_files
       @attachment.save
       @subject = Paperclip.io_adapters.for(@attachment,
                                            hash_digest: Digest::MD5)
@@ -88,6 +90,7 @@ describe Paperclip::AttachmentAdapter do
       @file.binmode
 
       @attachment.assign(@file)
+      @attachment.process_files
 
       @thumb = Tempfile.new("thumbnail").tap(&:binmode)
       FileUtils.cp @attachment.queued_for_write[:thumb].path, @thumb.path

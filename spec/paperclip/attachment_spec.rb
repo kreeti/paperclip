@@ -496,6 +496,7 @@ describe Paperclip::Attachment do
       expect(@attachment).to receive(:post_process).with(:thumb)
       expect(@attachment).to receive(:post_process).with(:large).never
       @attachment.assign(@file)
+      @attachment.process_files
     end
   end
 
@@ -515,6 +516,7 @@ describe Paperclip::Attachment do
       expect(@attachment).to receive(:post_process).with(:thumb)
       expect(@attachment).to receive(:post_process).with(:large).never
       @attachment.assign(@file)
+      @attachment.process_files
       @attachment.save
     end
   end
@@ -677,6 +679,7 @@ describe Paperclip::Attachment do
 
       it "correctly forwards processing error message to the instance" do
         @dummy.avatar = @file
+        @dummy.avatar.process_files
         @dummy.valid?
         assert_contains(
           @dummy.errors.full_messages,
@@ -695,6 +698,7 @@ describe Paperclip::Attachment do
       it "propagates the error" do
         assert_raises(Paperclip::Errors::CommandNotFoundError) do
           @dummy.avatar = @file
+          @dummy.avatar.process_files
         end
       end
     end
@@ -715,6 +719,7 @@ describe Paperclip::Attachment do
     context "when assigned" do
       it "calls #make on all specified processors" do
         @dummy.avatar = @file
+        @dummy.avatar.process_files
 
         expect(Paperclip::Thumbnail).to have_received(:make)
         expect(Paperclip::Test).to have_received(:make)
@@ -730,12 +735,14 @@ describe Paperclip::Attachment do
         )
 
         @dummy.avatar = @file
+        @dummy.avatar.process_files
 
         expect(Paperclip::Thumbnail).to have_received(:make).with(anything, expected_params, anything)
       end
 
       it "calls #make with attachment passed as third argument" do
         @dummy.avatar = @file
+        @dummy.avatar.process_files
 
         expect(Paperclip::Test).to have_received(:make).with(anything, anything, @dummy.avatar)
       end
@@ -744,6 +751,7 @@ describe Paperclip::Attachment do
         expect(@dummy.avatar).to receive(:unlink_files).with([@file, @file])
 
         @dummy.avatar = @file
+        @dummy.avatar.process_files
       end
     end
   end
@@ -764,6 +772,7 @@ describe Paperclip::Attachment do
         expect(@dummy.avatar).to receive(:unlink_files).with([])
 
         @dummy.avatar = @file
+        @dummy.avatar.process_files
       end
     end
   end
@@ -807,7 +816,10 @@ describe Paperclip::Attachment do
       @file = StringIO.new("...")
     end
     it "raises when assigned to" do
-      assert_raises(RuntimeError) { @dummy.avatar = @file }
+      assert_raises(RuntimeError) {
+        @dummy.avatar = @file
+        @dummy.avatar.process_files
+      }
     end
   end
 
@@ -841,6 +853,7 @@ describe Paperclip::Attachment do
       @file = StringIO.new(".")
       allow(@file).to receive(:to_tempfile).and_return(@file)
       @dummy = Dummy.new
+      @dummy.avatar.process_files
       allow(Paperclip::Thumbnail).to receive(:make).and_return(@file)
       @attachment = @dummy.avatar
     end
@@ -852,6 +865,7 @@ describe Paperclip::Attachment do
       expect(@dummy).to receive(:do_after_all)
       expect(Paperclip::Thumbnail).to receive(:make).and_return(@file)
       @dummy.avatar = @file
+      @dummy.avatar.process_files
     end
 
     it "does not cancel the processing if a before_post_process returns nil" do
@@ -861,6 +875,7 @@ describe Paperclip::Attachment do
       expect(@dummy).to receive(:do_after_all)
       expect(Paperclip::Thumbnail).to receive(:make).and_return(@file)
       @dummy.avatar = @file
+      @dummy.avatar.process_files
     end
 
     it "cancels the processing if a before_post_process returns false" do
@@ -870,6 +885,7 @@ describe Paperclip::Attachment do
       expect(@dummy).to receive(:do_after_all)
       expect(Paperclip::Thumbnail).not_to receive(:make)
       @dummy.avatar = @file
+      @dummy.avatar.process_files
     end
 
     it "cancels the processing if a before_avatar_post_process returns false" do
@@ -879,6 +895,7 @@ describe Paperclip::Attachment do
       expect(@dummy).to receive(:do_after_all)
       expect(Paperclip::Thumbnail).not_to receive(:make)
       @dummy.avatar = @file
+      @dummy.avatar.process_files
     end
   end
 
@@ -1183,6 +1200,7 @@ describe Paperclip::Attachment do
             now = Time.now
             allow(Time).to receive(:now).and_return(now)
             @attachment.assign(@file)
+            @attachment.process_files
           end
 
           it "is dirty" do
@@ -1363,8 +1381,10 @@ describe Paperclip::Attachment do
 
       it "sets changed? to true on attachment assignment" do
         @dummy.avatar = @file
+        @dummy.avatar.process_files
         @dummy.save!
         @dummy.avatar = @file
+        @dummy.avatar.process_files
         assert @dummy.changed?
       end
     end
