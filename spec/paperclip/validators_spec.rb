@@ -22,6 +22,7 @@ describe Paperclip::Validators do
     it "prevents you from attaching a file that violates that validation" do
       Dummy.class_eval { validate(:name) { raise "DO NOT RUN THIS" } }
       dummy = Dummy.new(avatar: File.new(fixture_file("12k.png")))
+      dummy.avatar.process_files
       expect(dummy.errors.keys).to match_array [:avatar_content_type, :avatar, :avatar_file_size]
       assert_raises(RuntimeError) { dummy.valid? }
     end
@@ -47,6 +48,7 @@ describe Paperclip::Validators do
     it "prevents you from attaching a file that violates all of these validations" do
       Dummy.class_eval { validate(:name) { raise "DO NOT RUN THIS" } }
       dummy = Dummy.new(avatar: File.new(fixture_file("spaced file.png")))
+      dummy.avatar.process_files
       expect(dummy.errors.keys).to match_array [:avatar, :avatar_file_name]
       assert_raises(RuntimeError) { dummy.valid? }
     end
@@ -54,6 +56,7 @@ describe Paperclip::Validators do
     it "prevents you from attaching a file that violates only first of these validations" do
       Dummy.class_eval { validate(:name) { raise "DO NOT RUN THIS" } }
       dummy = Dummy.new(avatar: File.new(fixture_file("5k.png")))
+      dummy.avatar.process_files
       expect(dummy.errors.keys).to match_array [:avatar, :avatar_file_name]
       assert_raises(RuntimeError) { dummy.valid? }
     end
@@ -61,6 +64,7 @@ describe Paperclip::Validators do
     it "prevents you from attaching a file that violates only second of these validations" do
       Dummy.class_eval { validate(:name) { raise "DO NOT RUN THIS" } }
       dummy = Dummy.new(avatar: File.new(fixture_file("spaced file.jpg")))
+      dummy.avatar.process_files
       expect(dummy.errors.keys).to match_array [:avatar, :avatar_file_name]
       assert_raises(RuntimeError) { dummy.valid? }
     end
@@ -88,6 +92,7 @@ describe Paperclip::Validators do
         end
       end
       dummy = Dummy.new(avatar: File.new(fixture_file("12k.png")))
+      dummy.avatar.process_files
       expect(dummy.errors.keys).to match_array [:avatar_content_type, :avatar, :avatar_file_size]
     end
 

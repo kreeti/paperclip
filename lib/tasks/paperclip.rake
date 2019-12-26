@@ -99,6 +99,7 @@ namespace :paperclip do
         Paperclip.each_instance_with_attachment(klass, name) do |instance|
           attachment = instance.send(name)
           attachment.assign(attachment)
+          attachment.process_files
           instance.save(validate: false)
         end
       end

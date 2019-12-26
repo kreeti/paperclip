@@ -36,6 +36,11 @@ describe Paperclip::HasAttachedFile do
       expect(Paperclip::AttachmentRegistry).to have_received(:register).with(a_class, "avatar", size: 1)
     end
 
+    it "defines an before_save callback" do
+      Paperclip::HasAttachedFile.define_on(a_class, "avatar", {})
+      expect(a_class).to have_received("before_save")
+    end
+
     it "defines an after_save callback" do
       Paperclip::HasAttachedFile.define_on(a_class, "avatar", {})
       expect(a_class).to have_received("after_save")
@@ -53,7 +58,7 @@ describe Paperclip::HasAttachedFile do
 
     context "when the class does not allow after_commit callbacks" do
       it "defines an after_destroy callback" do
-        a_class = double("class", after_destroy: nil, validates_each: nil, define_method: nil, after_save: nil, before_destroy: nil, define_paperclip_callbacks: nil, validates_media_type_spoof_detection: nil)
+        a_class = double("class", before_save: nil, after_destroy: nil, validates_each: nil, define_method: nil, after_save: nil, before_destroy: nil, define_paperclip_callbacks: nil, validates_media_type_spoof_detection: nil)
         Paperclip::HasAttachedFile.define_on(a_class, "avatar", {})
         expect(a_class).to have_received("after_destroy")
       end

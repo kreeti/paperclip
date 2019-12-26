@@ -12,6 +12,7 @@ describe "Attachment Processing" do
       expect(attachment).to receive(:post_process_styles)
 
       attachment.assign(file)
+      attachment.process_files
     end
 
     it "does not process attachments given an invalid assignment with :not" do
@@ -42,6 +43,7 @@ describe "Attachment Processing" do
       expect(attachment).to receive(:post_process_styles)
 
       attachment.assign(invalid_assignment)
+      attachment.process_files
     end
   end
 
@@ -54,6 +56,7 @@ describe "Attachment Processing" do
       expect(attachment).to receive(:post_process_styles)
 
       attachment.assign(file)
+      attachment.process_files
     end
 
     it "does not process attachments given an invalid assignment with :not" do

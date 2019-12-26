@@ -177,6 +177,7 @@ describe "Paperclip" do
       @dummy = Dummy.new
       @file = File.new(fixture_file("5k.png"), "rb")
       @dummy.avatar = @file
+      @dummy.avatar.process_files
     end
 
     it "reports the file size of the processed file and not the original" do
