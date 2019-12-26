@@ -63,7 +63,6 @@ describe Paperclip::Attachment do
     Dummy.create!(avatar: File.new(fixture_file("50x50.png"), "rb"))
 
     dummy = Dummy.first
-    allow(dummy.avatar).to receive(:check_validity?).and_return(true)
     dummy.avatar.reprocess!(:small)
 
     expect(dummy.avatar.path(:small)).to exist
@@ -869,8 +868,7 @@ describe Paperclip::Attachment do
       expect(@dummy).to receive(:do_after_avatar).never
       expect(@dummy).to receive(:do_before_all).and_return(false)
       expect(@dummy).to receive(:do_after_all)
-      expect(@dummy).to receive(:check_validity?).and_return(false)
-      @dummy.check_validity?
+      expect(Paperclip::Thumbnail).not_to receive(:make)
       @dummy.avatar = @file
     end
 
@@ -879,8 +877,27 @@ describe Paperclip::Attachment do
       expect(@dummy).to receive(:do_after_avatar)
       expect(@dummy).to receive(:do_before_all).and_return(true)
       expect(@dummy).to receive(:do_after_all)
-      expect(@dummy).to receive(:check_validity?).and_return(false)
-      @dummy.check_validity?
+      expect(Paperclip::Thumbnail).not_to receive(:make)
+      @dummy.avatar = @file
+    end
+
+    it "should not call process hooks if validation fails" do
+      @dummy.validates_presence_of :avatar
+      expect(@dummy).not_to receive(:do_before_avatar)
+      expect(@dummy).not_to receive(:do_after_avatar)
+      expect(@dummy).not_to receive(:do_before_all)
+      expect(@dummy).not_to receive(:do_after_all)
+      expect(Paperclip::Thumbnail).not_to receive(:make)
+      @dummy.avatar = @file
+    end
+
+    it "should call process hooks if validation would fail but check validity flag is false" do
+      @dummy.avatar.options[:check_validity_before_processing] = false
+      expect(@dummy).to receive(:do_before_avatar)
+      expect(@dummy).to receive(:do_after_avatar)
+      expect(@dummy).to receive(:do_before_all)
+      expect(@dummy).to receive(:do_after_all)
+      expect(Paperclip::Thumbnail).to receive(:make).and_return(@file)
       @dummy.avatar = @file
     end
   end
