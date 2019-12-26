@@ -63,6 +63,7 @@ describe Paperclip::Attachment do
     Dummy.create!(avatar: File.new(fixture_file("50x50.png"), "rb"))
 
     dummy = Dummy.first
+    allow(dummy.avatar).to receive(:check_validity?).and_return(true)
     dummy.avatar.reprocess!(:small)
 
     expect(dummy.avatar.path(:small)).to exist
@@ -868,7 +869,8 @@ describe Paperclip::Attachment do
       expect(@dummy).to receive(:do_after_avatar).never
       expect(@dummy).to receive(:do_before_all).and_return(false)
       expect(@dummy).to receive(:do_after_all)
-      expect(Paperclip::Thumbnail).not_to receive(:make)
+      expect(@dummy).to receive(:check_validity?).and_return(false)
+      @dummy.check_validity?
       @dummy.avatar = @file
     end
 
@@ -877,7 +879,8 @@ describe Paperclip::Attachment do
       expect(@dummy).to receive(:do_after_avatar)
       expect(@dummy).to receive(:do_before_all).and_return(true)
       expect(@dummy).to receive(:do_after_all)
-      expect(Paperclip::Thumbnail).not_to receive(:make)
+      expect(@dummy).to receive(:check_validity?).and_return(false)
+      @dummy.check_validity?
       @dummy.avatar = @file
     end
   end
