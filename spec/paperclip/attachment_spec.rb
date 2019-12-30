@@ -882,7 +882,9 @@ describe Paperclip::Attachment do
     end
 
     it "should not call process hooks if validation fails" do
-      @dummy.validates_presence_of :avatar
+      Dummy.class_eval do
+        validates_attachment_content_type :avatar, content_type: 'image/jpeg'
+      end
       expect(@dummy).not_to receive(:do_before_avatar)
       expect(@dummy).not_to receive(:do_after_avatar)
       expect(@dummy).not_to receive(:do_before_all)
@@ -892,6 +894,9 @@ describe Paperclip::Attachment do
     end
 
     it "should call process hooks if validation would fail but check validity flag is false" do
+      Dummy.class_eval do
+        validates_attachment_content_type :avatar, content_type: 'image/jpeg'
+      end
       @dummy.avatar.options[:check_validity_before_processing] = false
       expect(@dummy).to receive(:do_before_avatar)
       expect(@dummy).to receive(:do_after_avatar)
