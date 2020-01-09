@@ -24,7 +24,6 @@ gemfile:
   - gemfiles/5.0.gemfile
   - gemfiles/5.1.gemfile
   - gemfiles/5.2.gemfile
-  - gemfiles/6.0.gemfile
 
 matrix:
   fast_finish: true
@@ -43,5 +42,3 @@ matrix:
       rvm: 2.2
     - gemfile: gemfiles/6.0.gemfile
       rvm: 2.3
-    - gemfile: gemfiles/6.0.gemfile
-      rvm: 2.4
