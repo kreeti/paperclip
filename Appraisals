@@ -15,7 +15,7 @@ end
 
 appraise "5.2" do
   gem "sqlite3", "~> 1.3.8", platforms: :ruby
-  gem "rails", "~> 5.2.0"
+  gem "rails", "5.2.4"
 end
 
 appraise "6.0" do
