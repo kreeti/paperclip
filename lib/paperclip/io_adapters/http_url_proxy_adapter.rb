@@ -9,7 +9,7 @@ module Paperclip
     REGEXP = /\Ahttps?:\/\//.freeze
 
     def initialize(target, options = {})
-      escaped = URI.escape(target)
+      escaped = URI.encode_www_form_component(target).gsub('+', '%20')
       super(URI(target == URI.unescape(target) ? escaped : target), options)
     end
   end
