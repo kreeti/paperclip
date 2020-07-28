@@ -20,7 +20,7 @@ Gem::Specification.new do |s|
   s.post_install_message = File.read("UPGRADING") if File.exist?("UPGRADING")
 
   s.requirements << "ImageMagick"
-  s.required_ruby_version = ">= 2.1.0"
+  s.required_ruby_version = ">= 2.2.0"
 
   s.add_dependency("activemodel", ">= 4.2.0")
   s.add_dependency("activesupport", ">= 4.2.0")
@@ -34,7 +34,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency("aws-sdk-s3")
   s.add_development_dependency("bundler")
   s.add_development_dependency("capybara")
-  s.add_development_dependency("cucumber-expressions", "4.0.3") # TODO: investigate failures on 4.0.4
+  s.add_development_dependency("cucumber-expressions")
   s.add_development_dependency("cucumber-rails")
   s.add_development_dependency("fakeweb")
   s.add_development_dependency("fog-aws")
