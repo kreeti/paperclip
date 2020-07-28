@@ -3,7 +3,7 @@ Paperclip
 
 We plan to support and maintain paperclip, as well as clean it up.
 
-Please feel free to contribute pull requests.
+Please feel free to contribute Issues and pull requests.
 
 # Existing documentation
 
@@ -1037,7 +1037,9 @@ guidelines:
 
 1. Post a [pull request](https://github.com/kreeti/kt-paperclip/compare/).
 2. Make sure there are tests! We will not accept any patch that is not tested.
-   It's a rare time when explicit tests aren't needed.
+   It's a rare time when explicit tests aren't needed. If you have questions
+   about writing tests for paperclip, please open a
+   [GitHub issue](https://github.com/kreeti/kt-paperclip/issues/new).
 
 Please see [`CONTRIBUTING.md`](./CONTRIBUTING.md) for more details on contributing and running test.
 
