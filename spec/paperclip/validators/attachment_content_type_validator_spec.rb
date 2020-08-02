@@ -70,7 +70,7 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
   context "with add_validation_errors_to not set (implicitly :both)" do
     it "adds error to both attribute and base" do
       build_validator content_type: "image/png", allow_nil: false
-      @dummy.stubs(avatar_content_type: nil)
+      allow(@dummy).to receive_messages(avatar_content_type: nil)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_content_type].present?,
@@ -92,7 +92,7 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
 
     it "only adds error to attribute not base" do
       build_validator content_type: "image/png", allow_nil: false
-      @dummy.stubs(avatar_content_type: nil)
+      allow(@dummy).to receive_messages(avatar_content_type: nil)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_content_type].present?,
@@ -114,7 +114,7 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
 
     it "only adds error to base not attribute" do
       build_validator content_type: "image/png", allow_nil: false
-      @dummy.stubs(avatar_content_type: nil)
+      allow(@dummy).to receive_messages(avatar_content_type: nil)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,
@@ -129,7 +129,7 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
     it "only adds error to attribute not base" do
       build_validator content_type: "image/png", allow_nil: false,
         add_validation_errors_to: :attribute
-      @dummy.stubs(avatar_content_type: nil)
+      allow(@dummy).to receive_messages(avatar_content_type: nil)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_content_type].present?,
@@ -144,7 +144,7 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
     it "only adds error to base not attribute" do
       build_validator content_type: "image/png", allow_nil: false,
         add_validation_errors_to: :base
-      @dummy.stubs(avatar_content_type: nil)
+      allow(@dummy).to receive_messages(avatar_content_type: nil)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,

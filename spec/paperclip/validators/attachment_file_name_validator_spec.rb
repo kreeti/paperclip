@@ -32,7 +32,7 @@ describe Paperclip::Validators::AttachmentFileNameValidator do
   context "with add_validation_errors_to not set (implicitly :both)" do
     it "adds error to both attribute and base" do
       build_validator matches: /.*\.png$/, allow_nil: false
-      @dummy.stubs(avatar_file_name: "data.txt")
+      allow(@dummy).to receive_messages(avatar_file_name: "data.txt")
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_file_name].present?,
@@ -54,7 +54,7 @@ describe Paperclip::Validators::AttachmentFileNameValidator do
 
     it "only adds error to attribute not base" do
       build_validator matches: /.*\.png$/, allow_nil: false
-      @dummy.stubs(avatar_file_name: "data.txt")
+      allow(@dummy).to receive_messages(avatar_file_name: "data.txt")
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_file_name].present?,
@@ -76,7 +76,7 @@ describe Paperclip::Validators::AttachmentFileNameValidator do
 
     it "only adds error to base not attribute" do
       build_validator matches: /.*\.png$/, allow_nil: false
-      @dummy.stubs(avatar_file_name: "data.txt")
+      allow(@dummy).to receive_messages(avatar_file_name: "data.txt")
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,
@@ -91,7 +91,7 @@ describe Paperclip::Validators::AttachmentFileNameValidator do
     it "only adds error to attribute not base" do
       build_validator matches: /.*\.png$/, allow_nil: false,
         add_validation_errors_to: :attribute
-      @dummy.stubs(avatar_file_name: "data.txt")
+      allow(@dummy).to receive_messages(avatar_file_name: "data.txt")
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_file_name].present?,
@@ -106,7 +106,7 @@ describe Paperclip::Validators::AttachmentFileNameValidator do
     it "only adds error to base not attribute" do
       build_validator matches: /.*\.png$/, allow_nil: false,
         add_validation_errors_to: :base
-      @dummy.stubs(avatar_file_name: "data.txt")
+      allow(@dummy).to receive_messages(avatar_file_name: "data.txt")
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,

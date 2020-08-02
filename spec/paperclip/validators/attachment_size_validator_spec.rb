@@ -208,7 +208,7 @@ describe Paperclip::Validators::AttachmentSizeValidator do
   context "with add_validation_errors_to not set (implicitly :both)" do
     it "adds error to both attribute and base" do
       build_validator in: (5.kilobytes..10.kilobytes)
-      @dummy.stubs(:avatar_file_size).returns(11.kilobytes)
+      allow(@dummy).to receive(:avatar_file_size).and_return(11.kilobytes)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_file_size].present?,
@@ -230,7 +230,7 @@ describe Paperclip::Validators::AttachmentSizeValidator do
 
     it "only adds error to attribute not base" do
       build_validator in: (5.kilobytes..10.kilobytes)
-      @dummy.stubs(:avatar_file_size).returns(11.kilobytes)
+      allow(@dummy).to receive(:avatar_file_size).and_return(11.kilobytes)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_file_size].present?,
@@ -252,7 +252,7 @@ describe Paperclip::Validators::AttachmentSizeValidator do
 
     it "only adds error to base not attribute" do
       build_validator in: (5.kilobytes..10.kilobytes)
-      @dummy.stubs(:avatar_file_size).returns(11.kilobytes)
+      allow(@dummy).to receive(:avatar_file_size).and_return(11.kilobytes)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,
@@ -267,7 +267,7 @@ describe Paperclip::Validators::AttachmentSizeValidator do
     it "only adds error to attribute not base" do
       build_validator in: (5.kilobytes..10.kilobytes),
         add_validation_errors_to: :attribute
-      @dummy.stubs(:avatar_file_size).returns(11.kilobytes)
+      allow(@dummy).to receive(:avatar_file_size).and_return(11.kilobytes)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_file_size].present?,
@@ -282,7 +282,7 @@ describe Paperclip::Validators::AttachmentSizeValidator do
     it "only adds error to base not attribute" do
       build_validator in: (5.kilobytes..10.kilobytes),
         add_validation_errors_to: :base
-      @dummy.stubs(:avatar_file_size).returns(11.kilobytes)
+      allow(@dummy).to receive(:avatar_file_size).and_return(11.kilobytes)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,
