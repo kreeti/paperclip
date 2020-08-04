@@ -24,7 +24,8 @@ module Paperclip
         validate_blacklist(record, attribute, value)
 
         if record.errors.include?(attribute) &&
-        [:both, :base].include?(options[:add_validation_errors_to])
+            [:both, :base].include?(options[:add_validation_errors_to])
+
           record.errors[attribute].each do |error|
             record.errors.add base_attribute, error
           end

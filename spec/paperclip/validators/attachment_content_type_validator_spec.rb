@@ -74,10 +74,10 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_content_type].present?,
-        "Error not added to attribute"
+             "Error not added to attribute"
 
       assert @dummy.errors[:avatar].present?,
-        "Error not added to base attribute"
+             "Error not added to base attribute"
     end
   end
 
@@ -96,10 +96,10 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_content_type].present?,
-        "Error not added to attribute"
+             "Error not added to attribute"
 
       assert @dummy.errors[:avatar].blank?,
-        "Error added to base attribute"
+             "Error added to base attribute"
     end
   end
 
@@ -118,10 +118,10 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,
-        "Error not added to base attribute"
+             "Error not added to base attribute"
 
       assert @dummy.errors[:avatar_content_type].blank?,
-        "Error added to attribute"
+             "Error added to attribute"
     end
   end
 
@@ -133,10 +133,10 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_content_type].present?,
-        "Error not added to attribute"
+             "Error not added to attribute"
 
       assert @dummy.errors[:avatar].blank?,
-        "Error added to base attribute"
+             "Error added to base attribute"
     end
   end
 
@@ -148,10 +148,10 @@ describe Paperclip::Validators::AttachmentContentTypeValidator do
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,
-        "Error not added to base attribute"
+             "Error not added to base attribute"
 
       assert @dummy.errors[:avatar_content_type].blank?,
-        "Error added to attribute"
+             "Error added to attribute"
     end
   end
 

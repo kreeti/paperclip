@@ -212,10 +212,10 @@ describe Paperclip::Validators::AttachmentSizeValidator do
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_file_size].present?,
-        "Error not added to attribute"
+             "Error not added to attribute"
 
       assert @dummy.errors[:avatar].present?,
-        "Error not added to base attribute"
+             "Error not added to base attribute"
     end
   end
 
@@ -234,10 +234,10 @@ describe Paperclip::Validators::AttachmentSizeValidator do
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_file_size].present?,
-        "Error not added to attribute"
+             "Error not added to attribute"
 
       assert @dummy.errors[:avatar].blank?,
-        "Error added to base attribute"
+             "Error added to base attribute"
     end
   end
 
@@ -256,40 +256,42 @@ describe Paperclip::Validators::AttachmentSizeValidator do
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,
-        "Error not added to base attribute"
+             "Error not added to base attribute"
 
       assert @dummy.errors[:avatar_file_size].blank?,
-        "Error added to attribute"
+             "Error added to attribute"
     end
   end
 
   context "with add_validation_errors_to set to :attribute" do
     it "only adds error to attribute not base" do
       build_validator in: (5.kilobytes..10.kilobytes),
-        add_validation_errors_to: :attribute
+                      add_validation_errors_to: :attribute
+
       allow(@dummy).to receive(:avatar_file_size).and_return(11.kilobytes)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar_file_size].present?,
-        "Error not added to attribute"
+             "Error not added to attribute"
 
       assert @dummy.errors[:avatar].blank?,
-        "Error added to base attribute"
+             "Error added to base attribute"
     end
   end
 
   context "with add_validation_errors_to set to :base" do
     it "only adds error to base not attribute" do
       build_validator in: (5.kilobytes..10.kilobytes),
-        add_validation_errors_to: :base
+                      add_validation_errors_to: :base
+
       allow(@dummy).to receive(:avatar_file_size).and_return(11.kilobytes)
       @validator.validate(@dummy)
 
       assert @dummy.errors[:avatar].present?,
-        "Error not added to base attribute"
+             "Error not added to base attribute"
 
       assert @dummy.errors[:avatar_file_size].blank?,
-        "Error added to attribute"
+             "Error added to attribute"
     end
   end
 
