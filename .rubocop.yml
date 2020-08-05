@@ -1,1 +1,3 @@
+require:
+  - rubocop-rails
 inherit_from: .hound.yml
