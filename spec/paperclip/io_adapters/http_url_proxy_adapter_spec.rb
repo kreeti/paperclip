@@ -16,54 +16,59 @@ describe Paperclip::HttpUrlProxyAdapter do
   context "a new instance" do
     before do
       @url = "http://thoughtbot.com/images/thoughtbot-logo.png"
-      @subject = Paperclip.io_adapters.for(@url, hash_digest: Digest::MD5)
     end
 
+    subject { Paperclip.io_adapters.for(@url, hash_digest: Digest::MD5) }
+
     after do
-      @subject.close
+      subject.close
     end
 
     it "returns a file name" do
-      assert_equal "thoughtbot-logo.png", @subject.original_filename
+      expect(subject.original_filename).to(eq("thoughtbot-logo.png"))
     end
 
     it "closes open handle after reading" do
-      assert_equal true, @open_return.closed?
+      expect { subject }.to(change { @open_return.closed? }.from(false).to(true))
     end
 
     it "returns a content type" do
-      assert_equal "image/png", @subject.content_type
+      expect(subject.content_type).to(eq("image/png"))
     end
 
     it "returns the size of the data" do
-      assert_equal @open_return.size, @subject.size
+      expect(subject.size).to(eq(@open_return.size))
     end
 
     it "generates an MD5 hash of the contents" do
-      assert_equal Digest::MD5.hexdigest("xxx"), @subject.fingerprint
+      expect(subject.fingerprint).to(eq(Digest::MD5.hexdigest("xxx")))
     end
 
     it "generates correct fingerprint after read" do
-      fingerprint = Digest::MD5.hexdigest(@subject.read)
-      assert_equal fingerprint, @subject.fingerprint
+      fingerprint = Digest::MD5.hexdigest(subject.read)
+      expect(subject.fingerprint).to(eq(fingerprint))
     end
 
     it "generates same fingerprint" do
-      assert_equal @subject.fingerprint, @subject.fingerprint
+      expect(subject.fingerprint).to(eq(subject.fingerprint))
     end
 
     it "returns the data contained in the StringIO" do
-      assert_equal "xxx", @subject.read
+      expect(subject.read).to(eq("xxx"))
     end
 
     it "accepts a content_type" do
-      @subject.content_type = "image/png"
-      assert_equal "image/png", @subject.content_type
+      subject.content_type = "image/png"
+      expect(subject.content_type).to(eq("image/png"))
     end
 
     it "accepts an original_filename" do
-      @subject.original_filename = "image.png"
-      assert_equal "image.png", @subject.original_filename
+      subject.original_filename = "image.png"
+      expect(subject.original_filename).to(eq("image.png"))
+    end
+
+    it "doesn't emit deprecation warnings" do
+      expect { subject }.to_not(output(/URI\.(un)?escape is obsolete/).to_stderr)
     end
   end
 
