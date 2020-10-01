@@ -805,9 +805,7 @@ describe Paperclip::Storage::S3 do
                         s3_region: "ap-northeast-1",
                         s3_host_name: "s3-ap-northeast-1.amazonaws.com"
                       },
-                      test: {
-                        s3_region: ""
-                      }
+                      test: { }
                     }
       @dummy = Dummy.new
     end
