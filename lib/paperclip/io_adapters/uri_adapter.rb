@@ -50,10 +50,18 @@ module Paperclip
       "index.html"
     end
 
-    def download_content
-      options = { read_timeout: Paperclip.options[:read_timeout] }.compact
+    if RUBY_VERSION < '2.5'
+      def download_content
+        options = { read_timeout: Paperclip.options[:read_timeout] }.compact
 
-      self.open(@target, options)
+        open(@target, options)
+      end
+    else
+      def download_content
+        options = { read_timeout: Paperclip.options[:read_timeout] }.compact
+
+        URI.open(@target, options)
+      end
     end
 
     def copy_to_tempfile(src)
