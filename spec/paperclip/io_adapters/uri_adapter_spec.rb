@@ -204,7 +204,7 @@ describe Paperclip::UriAdapter do
 
       @uri = URI.parse("https://github.com/thoughtbot/paper:clip.jpg")
       @subject = Paperclip.io_adapters.for(@uri)
-      @uri_opener = RUBY_VERSION < '2.5' ? @adapter : URI
+      @uri_opener = RUBY_VERSION < '2.5' ? @subject : URI
     end
 
     after do
