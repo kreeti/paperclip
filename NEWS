@@ -1,3 +1,7 @@
+6.1.1 (2021-02-02):
+
+* Bugfix: Remove 'last argument as keyword parameters is deprecated' warnings. (#46)
+
 6.1.0 (2018-07-27):
 
 * BUGFIX: Don't double-encode URLs (Roderick Monje).
