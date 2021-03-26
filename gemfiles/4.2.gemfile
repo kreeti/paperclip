@@ -11,7 +11,6 @@ group :development, :test do
   gem "bootsnap", require: false
   gem "builder"
   gem "listen", "~> 3.0.8"
-  gem "mime-types"
   gem "rspec"
   gem "rubocop", require: false
   gem "rubocop-rails"

@@ -15,7 +15,7 @@ describe Paperclip::AbstractAdapter do
     before do
       allow(subject).to receive(:path).and_return("image.png")
       allow(Paperclip).to receive(:run).and_return("image/png\n")
-      allow_any_instance_of(Paperclip::ContentTypeDetector).to receive(:type_from_mime_magic).and_return("image/png")
+      allow_any_instance_of(Paperclip::ContentTypeDetector).to receive(:type_from_marcel).and_return("image/png")
     end
 
     it "returns the content type without newline" do

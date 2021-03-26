@@ -1,3 +1,7 @@
+Unreleased:
+
+* Replace `mimemagic` gem with `marcel` due to licensing issues. See also https://github.com/rails/marcel/pull/30 and https://weblog.rubyonrails.org/2021/3/26/marcel-upgrade-releases/
+
 6.1.0 (2018-07-27):
 
 * BUGFIX: Don't double-encode URLs (Roderick Monje).
