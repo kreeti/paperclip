@@ -1,6 +1,6 @@
 Unreleased:
 
-* Replace `mimemagic` gem with `marcel` due to licensing issues. See also https://github.com/rails/marcel/pull/30 and https://weblog.rubyonrails.org/2021/3/26/marcel-upgrade-releases/
+* Replace `mimemagic` gem with `marcel` due to licensing issues. See https://github.com/kreeti/kt-paperclip/pull/54 for a list of known incompatibilities.
 
 6.1.0 (2018-07-27):
 
