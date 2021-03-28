@@ -23,7 +23,7 @@ When /^I modify my attachment definition to:$/ do |definition|
 end
 
 When /^I upload the fixture "([^"]*)"$/ do |filename|
-  run_simple %(bundle exec rails runner "User.create!(:attachment => File.open('#{fixture_path(filename)}'))")
+  aruba_run_simple %(bundle exec rails runner "User.create!(:attachment => File.open('#{fixture_path(filename)}'))")
 end
 
 Then /^the attachment "([^"]*)" should have a dimension of (\d+x\d+)$/ do |filename, dimension|
@@ -106,5 +106,15 @@ Then /^I should not have attachment columns for "([^"]*)"$/ do |attachment_name|
     ]
 
     expect(columns).not_to include(*expect_columns)
+  end
+end
+
+# we have to support different versions of aruba, and this method was renamed for 1.0
+# https://github.com/cucumber/aruba/pull/438
+def aruba_run_simple(*args)
+  if respond_to?(:run_simple)
+    run_simple *args
+  elsif respond_to?(:run_command_and_stop)
+    run_command_and_stop *args
   end
 end
