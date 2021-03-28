@@ -113,8 +113,8 @@ end
 # https://github.com/cucumber/aruba/pull/438
 def aruba_run_simple(*args)
   if respond_to?(:run_simple)
-    run_simple *args
+    run_simple(*args)
   elsif respond_to?(:run_command_and_stop)
-    run_command_and_stop *args
+    run_command_and_stop(*args)
   end
 end
