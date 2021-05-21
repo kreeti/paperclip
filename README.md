@@ -90,7 +90,7 @@ Requirements
 
 ### Ruby and Rails
 
-Paperclip now requires Ruby version **>= 2.2** and Rails version **>= 4.2**
+Paperclip now requires Ruby version **>= 2.3** and Rails version **>= 4.2**
 (only if you're going to use Paperclip with Ruby on Rails).
 
 ### Image Processor
