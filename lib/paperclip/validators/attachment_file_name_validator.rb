@@ -27,7 +27,7 @@ module Paperclip
             [:both, :base].include?(options[:add_validation_errors_to])
 
           record.errors[attribute].each do |error|
-            record.errors.add base_attribute, error
+            record.errors.add(base_attribute, error)
           end
 
           record.errors.delete(attribute) if options[:add_validation_errors_to] == :base

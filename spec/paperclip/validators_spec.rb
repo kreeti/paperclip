@@ -1,6 +1,10 @@
 require "spec_helper"
 
 describe Paperclip::Validators do
+  def error_attribute_names(error) # to support a range of rubies
+    error.try(:attribute_names) || error.keys
+  end
+
   context "using the helper" do
     before do
       rebuild_class
@@ -22,7 +26,7 @@ describe Paperclip::Validators do
     it "prevents you from attaching a file that violates that validation" do
       Dummy.class_eval { validate(:name) { raise "DO NOT RUN THIS" } }
       dummy = Dummy.new(avatar: File.new(fixture_file("12k.png")))
-      expect(dummy.errors.keys).to match_array [:avatar_content_type, :avatar, :avatar_file_size]
+      expect(error_attribute_names(dummy.errors)).to match_array [:avatar_content_type, :avatar, :avatar_file_size]
       assert_raises(RuntimeError) { dummy.valid? }
     end
   end
@@ -47,21 +51,21 @@ describe Paperclip::Validators do
     it "prevents you from attaching a file that violates all of these validations" do
       Dummy.class_eval { validate(:name) { raise "DO NOT RUN THIS" } }
       dummy = Dummy.new(avatar: File.new(fixture_file("spaced file.png")))
-      expect(dummy.errors.keys).to match_array [:avatar, :avatar_file_name]
+      expect(error_attribute_names(dummy.errors)).to match_array [:avatar, :avatar_file_name]
       assert_raises(RuntimeError) { dummy.valid? }
     end
 
     it "prevents you from attaching a file that violates only first of these validations" do
       Dummy.class_eval { validate(:name) { raise "DO NOT RUN THIS" } }
       dummy = Dummy.new(avatar: File.new(fixture_file("5k.png")))
-      expect(dummy.errors.keys).to match_array [:avatar, :avatar_file_name]
+      expect(error_attribute_names(dummy.errors)).to match_array [:avatar, :avatar_file_name]
       assert_raises(RuntimeError) { dummy.valid? }
     end
 
     it "prevents you from attaching a file that violates only second of these validations" do
       Dummy.class_eval { validate(:name) { raise "DO NOT RUN THIS" } }
       dummy = Dummy.new(avatar: File.new(fixture_file("spaced file.jpg")))
-      expect(dummy.errors.keys).to match_array [:avatar, :avatar_file_name]
+      expect(error_attribute_names(dummy.errors)).to match_array [:avatar, :avatar_file_name]
       assert_raises(RuntimeError) { dummy.valid? }
     end
 
@@ -88,7 +92,7 @@ describe Paperclip::Validators do
         end
       end
       dummy = Dummy.new(avatar: File.new(fixture_file("12k.png")))
-      expect(dummy.errors.keys).to match_array [:avatar_content_type, :avatar, :avatar_file_size]
+      expect(error_attribute_names(dummy.errors)).to match_array [:avatar_content_type, :avatar, :avatar_file_size]
     end
 
     it "does not validate attachment if title is not present" do
@@ -98,7 +102,7 @@ describe Paperclip::Validators do
         end
       end
       dummy = Dummy.new(avatar: File.new(fixture_file("12k.png")))
-      assert_equal [], dummy.errors.keys
+      assert_equal [], error_attribute_names(dummy.errors)
     end
   end
 
